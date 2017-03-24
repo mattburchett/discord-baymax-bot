@@ -4,6 +4,9 @@ var Discordie = require('discordie');
 // Require log4js for logging to files
 var log4js = require('log4js');
 
+// require moment-timezone for timezone conversion
+var Moment = require('moment-timezone');
+
 // require custom settings
 var config = require('./config.json');
 
@@ -60,8 +63,19 @@ setInterval(function() {
       e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a strip of delicious bacon.* ")
 
       // !cookie
-      if (e.message.content == "!cookie")
+      // if (e.message.content.indexOf("!cookie") >=0) {
+      if (e.message.content == "!cookie") {
       e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a freshly made Oatmeal Raisin cookie.*")
+      //   if (e.message.content !== "!cookie") {
+      //     var input = e.message.content
+      //     var fields = input.split(' ', 2)
+      //     var user = client.Users.find(u => u.username == fields[1]);
+      //     e.message.channel.sendMessage("*gives " + user.mention[fields[1] + " a freshly made Oatmeal Raisin cookie.*")
+      // } else {
+      //     e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a freshly made Oatmeal Raisin cookie.*")
+      //   }
+      }
+
 
       // !help
       if (e.message.content == "!help")
@@ -88,12 +102,12 @@ setInterval(function() {
       // fist bump
       if (e.message.content == "*fist bump*" || e.message.content == "*fistbump*")
       e.message.channel.sendMessage("Ba-la-la-la-la! \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294327036388835328/giphy-3.gif")
+      https://cdn.discordapp.com/attachments/265064665099403264/294327036388835328/giphy-3.gif");
 
       // !lollipop
       if (e.message.content == "I'm satisfied with my care.")
       e.message.channel.sendMessage("You have been good, have a lollipop! \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294333704749449216/Baemax-baymax-lollipop.gif")
+      https://cdn.discordapp.com/attachments/265064665099403264/294333704749449216/Baemax-baymax-lollipop.gif");
 
       // end Baymax easter eggs
       // begin misc chat triggers
@@ -103,6 +117,28 @@ setInterval(function() {
       e.message.channel.sendMessage("*mic drop*");
 
       // end misc chat triggers
+
+      // begin mod-only command
+      if (e.message.channel.name == "mod" || e.message.channel.name == "helpers" ) {
+
+        // !birthday
+
+        if (e.message.content == "!birthday")
+        e.message.channel.sendMessage("List of Moderator Birthdays:\r\r\
+        arielhasfins: 1992-07-21\r\
+        Nanako: 1994-08-18\r\
+        WARBIRD199: 1994-12-19\r\
+        bluedinosaursocks: 1995-01-07\r\
+        Meep: 1995-01-17");
+
+        // !time
+        if (e.message.content == "!time")
+        e.message.channel.sendMessage("List of Moderator Timezones:\r\r\
+        America/Phoenix: " + Moment().tz('America/Phoenix').format('YYYY/MM/DD | HH:mm:ss zz') + "\r\
+        America/Chicago: " + Moment().tz('America/Chicago').format('YYYY/MM/DD | HH:mm:ss zz') + "\r\
+        America/New_York: " + Moment().tz('America/New_York').format('YYYY/MM/DD | HH:mm:ss zz') + "\r\
+        Asia/Singapore: " + Moment().tz('Asia/Singapore').format('YYYY/MM/DD | HH:mm:ss zz'))
+      }
     }
   });
 
