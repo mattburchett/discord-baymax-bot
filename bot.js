@@ -59,21 +59,36 @@ setInterval(function() {
       e.message.channel.sendMessage("pong");
 
       // !bacon
-      if (e.message.content == "!bacon")
-      e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a strip of delicious bacon.* ")
+      if (e.message.content.match(/^!bacon/))
+      if (e.message.content !== "!bacon") {
+        var input = e.message.content
+        var fields = input.split(' ', 2)
+        var user = client.Users.find(u => u.username == fields[1]);
+        if (user == null) {
+          e.message.channel.sendMessage("Username not found.");
+        } else {
+          e.message.channel.sendMessage("*gives " + user.mention + " a strip of delicious bacon on behalf of " + e.message.author.nickMention + " *" );
+        }
+      } else {
+        e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a strip of delicious bacon.* ")
+      }
 
       // !cookie
-      // if (e.message.content.indexOf("!cookie") >=0) {
-      if (e.message.content == "!cookie") {
-      e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a freshly made Oatmeal Raisin cookie.*")
-      //   if (e.message.content !== "!cookie") {
-      //     var input = e.message.content
-      //     var fields = input.split(' ', 2)
-      //     var user = client.Users.find(u => u.username == fields[1]);
-      //     e.message.channel.sendMessage("*gives " + user.mention[fields[1] + " a freshly made Oatmeal Raisin cookie.*")
-      // } else {
-      //     e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a freshly made Oatmeal Raisin cookie.*")
-      //   }
+      if (e.message.content.match(/^!cookie/) ) {
+        var cookiearray = [ 'oatmeal raisin', 'sugar', 'chocolate chip', 'oatmeal', 'M&M', 'white chocolate macadamia nut' ]
+        var cookie = cookiearray[Math.floor(Math.random()*cookiearray.length)];
+        if (e.message.content !== "!cookie") {
+          var input = e.message.content
+          var fields = input.split(' ', 2)
+          var user = client.Users.find(u => u.username == fields[1]);
+          if (user == null) {
+            e.message.channel.sendMessage("Username not found.");
+          } else {
+            e.message.channel.sendMessage("*gives " + user.mention + " a freshly made " + cookie + " cookie on behalf of " + e.message.author.nickMention + ".*" );
+          }
+        } else {
+          e.message.channel.sendMessage("*gives " + e.message.author.nickMention + " a freshly made " + cookie + " cookie.*")
+        }
       }
 
 
@@ -81,34 +96,45 @@ setInterval(function() {
       if (e.message.content == "!help")
       e.message.channel.sendMessage("Sorry.");
 
+      // !commands
+      if (e.message.content == "!commands")
+      e.message.channel.sendMessage(config.botname + " commands: \r\
+      **!bacon [username] / !bacon** - Free bacon!\r\
+      **!cookie [username] / !cookie** - Free cookies!\r\r\
+      -- Upcoming and Not-Yet-Functional Commands -- \r\
+      **!w** - Weather\r\
+      **!ud** - Urban Dictionary lookup")
+
+
       // end chat commands
       // begin Baymax easter eggs
 
-      // ow
-      if (e.message.content == "ow" || e.message.content == "Ow" || e.message.content == "OW" || e.message.content == "oW" || e.message.content == "Ow!" || e.message.content == "Ow.")
-      e.message.channel.sendMessage("Hello. I am Baymax, your personal Discord companion. \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294326730703896577/giphy-2.gif");
+      if (config.botname == "Baymax") {
+        // ow
+        if (e.message.content == "ow" || e.message.content == "Ow" || e.message.content == "OW" || e.message.content == "oW" || e.message.content == "Ow!" || e.message.content == "Ow.")
+        e.message.channel.sendMessage("Hello. I am Baymax, your personal Discord companion. \r\r\
+        https://cdn.discordapp.com/attachments/265064665099403264/294326730703896577/giphy-2.gif");
 
-      // heart attack
-      if (e.message.content.indexOf('heart attack') >=0)
-      e.message.channel.sendMessage("My hands are equipped with defibrillators. **CLEAR!** \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294302721429995520/tumblr_n9h0l4ODbC1ry7whco1_1280.gif");
+        // heart attack
+        if (e.message.content.indexOf('heart attack') >=0)
+        e.message.channel.sendMessage("My hands are equipped with defibrillators. **CLEAR!** \r\r\
+        https://cdn.discordapp.com/attachments/265064665099403264/294302721429995520/tumblr_n9h0l4ODbC1ry7whco1_1280.gif");
 
-      // Cry emoji... There's actually a emoji there, I swear.
-      if (e.message.content == "😢")
-      e.message.channel.sendMessage("There, there. \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294303907704864770/giphy-4.gif");
+        // Cry emoji... There's actually a emoji there, I swear.
+        if (e.message.content == "😢")
+        e.message.channel.sendMessage("There, there. \r\r\
+        https://cdn.discordapp.com/attachments/265064665099403264/294303907704864770/giphy-4.gif");
 
-      // fist bump
-      if (e.message.content == "*fist bump*" || e.message.content == "*fistbump*")
-      e.message.channel.sendMessage("Ba-la-la-la-la! \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294327036388835328/giphy-3.gif");
+        // fist bump
+        if (e.message.content == "*fist bump*" || e.message.content == "*fistbump*")
+        e.message.channel.sendMessage("Ba-la-la-la-la! \r\r\
+        https://cdn.discordapp.com/attachments/265064665099403264/294327036388835328/giphy-3.gif");
 
-      // !lollipop
-      if (e.message.content == "I'm satisfied with my care.")
-      e.message.channel.sendMessage("You have been good, have a lollipop! \r\r\
-      https://cdn.discordapp.com/attachments/265064665099403264/294333704749449216/Baemax-baymax-lollipop.gif");
-
+        // !lollipop
+        if (e.message.content == "I'm satisfied with my care.")
+        e.message.channel.sendMessage("You have been good, have a lollipop! \r\r\
+        https://cdn.discordapp.com/attachments/265064665099403264/294333704749449216/Baemax-baymax-lollipop.gif");
+      }
       // end Baymax easter eggs
       // begin misc chat triggers
 
